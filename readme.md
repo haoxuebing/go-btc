@@ -4,11 +4,13 @@
 
 **比特币有三种不同的地址格式：**
 
-•Legacy 地址 (P2PKH)：以 1 开头，遵循传统的 BIP-44 派生。 [bip-44代码](account/bip-44/main.go)。eg：**Leather**
+1. Legacy 地址 (P2PKH)：以 1 开头，遵循传统的 BIP-44 派生。 [bip-44代码](account/bip-44/main.go)。
+    eg：**Leather**
 
-•P2SH 地址：以 3 开头，遵循 BIP-49，用于 SegWit 的兼容模式。 [bip-49代码](account/bip-49/main.go)
+2. P2SH 地址：以 3 开头，遵循 BIP-49，用于 SegWit 的兼容模式。 [bip-49代码](account/bip-49/main.go)
 
-•Bech32 地址 (Native SegWit, P2WPKH)：以 bc1 开头，遵循 BIP-84，是更现代化的 SegWit 地址格式。 [bip-84代码](account/bip-84/main.go)。eg：**CoinWallet**
+3. Bech32 地址 (Native SegWit, P2WPKH)：以 bc1 开头，遵循 BIP-84，是更现代化的 SegWit 地址格式。 [bip-84代码](account/bip-84/main.go)。
+    eg：**CoinWallet**
 
 example:
 
