@@ -97,6 +97,3 @@ func GenerateMnemonic() (string, error) {
 
 	return mnemonic, nil
 }
-
-// bc1qz66uxud3kv3s79ddpnkyj3s2spc2flqudk4www
-// 1CDqGVeqD5mXt3eBedHNC6KJ3xVePkZPzb
