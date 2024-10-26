@@ -1,5 +1,15 @@
 # Go-BTC
 
+## 前置知识：UTXO、交易结构与脚本语言
+
+- 测试网交易池可视化：https://mempool.space/testnet
+
+- 测试代币水龙头：https://bitcoinfaucet.uo1.net/
+
+- 测试私钥生成（主网尽量不要使用）：https://iancoleman.io/bip39/
+
+golang 下的 Bitcoin 工具库为：github.com/btcsuite/btcd
+
 ## 使用助记词派生比特币地址
 
 **比特币有三种不同的地址格式：**
@@ -22,3 +32,4 @@ example:
 # Bech32 地址，使用这种地址的钱包：CoinWallet
 bc1qz66uxud3kv3s79ddpnkyj3s2spc2flqudk4www
 ```
+
