@@ -14,6 +14,8 @@ import (
 	"github.com/tyler-smith/go-bip39"
 )
 
+var NetParams = &chaincfg.TestNet3Params
+
 func main() {
 	mnemonic, err := helper.GenerateMnemonic()
 	if err != nil {
@@ -33,17 +35,17 @@ func main() {
 func generateBitcoinAddress(mnemonic string) (*btcutil.WIF, *btcec.PublicKey, *btcutil.AddressPubKey, error) {
 	seed := bip39.NewSeed(mnemonic, "")
 
-	masterKey, err := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
+	masterKey, err := hdkeychain.NewMaster(seed, NetParams)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("创建主私钥失败: %w", err)
 	}
 
 	path := []uint32{
-		44 + hdkeychain.HardenedKeyStart,
-		0 + hdkeychain.HardenedKeyStart,
-		0 + hdkeychain.HardenedKeyStart,
-		0,
-		0,
+		44 + hdkeychain.HardenedKeyStart, // purpose
+		1 + hdkeychain.HardenedKeyStart,  // coin type 主网 0,测试网 1
+		0 + hdkeychain.HardenedKeyStart,  // account
+		0,                                // external chain
+		0,                                // address index
 	}
 
 	key := masterKey
@@ -59,14 +61,14 @@ func generateBitcoinAddress(mnemonic string) (*btcutil.WIF, *btcec.PublicKey, *b
 		return nil, nil, nil, fmt.Errorf("获取私钥失败: %w", err)
 	}
 
-	wif, err := btcutil.NewWIF(privateKey, &chaincfg.MainNetParams, true)
+	wif, err := btcutil.NewWIF(privateKey, NetParams, true)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("创建WIF失败: %w", err)
 	}
 
 	publicKey := privateKey.PubKey()
 
-	addr, err := btcutil.NewAddressPubKey(publicKey.SerializeCompressed(), &chaincfg.MainNetParams)
+	addr, err := btcutil.NewAddressPubKey(publicKey.SerializeCompressed(), NetParams)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("创建地址失败: %w", err)
 	}
