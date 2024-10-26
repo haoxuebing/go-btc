@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 
+	"go-btc/helper"
+
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 	"github.com/btcsuite/btcd/chaincfg" // 更新导入路径
@@ -14,7 +16,7 @@ import (
 // 使用 BIP-84 路径 m/84'/0'/0'/0/0 生成比特币地址
 func main() {
 	// 生成助记词
-	mnemonic, err := GenerateMnemonic()
+	mnemonic, err := helper.GetMnemonicFromENV()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,20 +87,4 @@ func main() {
 	fmt.Printf("公钥 (非压缩格式): %s\n", hex.EncodeToString(publicKey.SerializeUncompressed()))
 	// 输出 Bech32 地址
 	fmt.Println("Bech32 地址:", address.EncodeAddress())
-}
-
-// GenerateMnemonic 生成助记词
-func GenerateMnemonic() (string, error) {
-	// 生成助记词
-	entropy, err := bip39.NewEntropy(128) // 128-bit entropy, 可以使用 256-bit
-	if err != nil {
-		return "", fmt.Errorf("生成熵失败: %w", err)
-	}
-
-	mnemonic, err := bip39.NewMnemonic(entropy)
-	if err != nil {
-		return "", fmt.Errorf("生成助记词失败: %w", err)
-	}
-
-	return mnemonic, nil
 }

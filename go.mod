@@ -5,6 +5,7 @@ go 1.22.4
 require (
 	github.com/btcsuite/btcd v0.24.2
 	github.com/btcsuite/btcd/btcutil v1.1.5
+	github.com/joho/godotenv v1.5.1
 	github.com/tyler-smith/go-bip39 v1.1.0
 )
 
