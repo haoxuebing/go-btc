@@ -17,7 +17,7 @@ import (
 var NetParams = &chaincfg.TestNet3Params
 
 func main() {
-	mnemonic, err := helper.GenerateMnemonic()
+	mnemonic, err := helper.GetMnemonicFromENV()
 	if err != nil {
 		log.Fatalf("获取助记词失败: %v", err)
 	}
@@ -42,10 +42,10 @@ func generateBitcoinAddress(mnemonic string) (*btcutil.WIF, *btcec.PublicKey, *b
 
 	path := []uint32{
 		44 + hdkeychain.HardenedKeyStart, // purpose
-		1 + hdkeychain.HardenedKeyStart,  // coin type 主网 0,测试网 1
+		0 + hdkeychain.HardenedKeyStart,  // coin type
 		0 + hdkeychain.HardenedKeyStart,  // account
 		0,                                // external chain
-		0,                                // address index
+		1,                                // address index
 	}
 
 	key := masterKey

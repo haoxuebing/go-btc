@@ -42,7 +42,7 @@ func generateBIP84Address(mnemonic string) (*btcutil.WIF, *btcec.PublicKey, btcu
 
 	path := []uint32{
 		84 + hdkeychain.HardenedKeyStart, // purpose
-		1 + hdkeychain.HardenedKeyStart,  // coin type
+		0 + hdkeychain.HardenedKeyStart,  // coin type
 		0 + hdkeychain.HardenedKeyStart,  // account
 		0,                                // external chain
 		0,                                // address index
