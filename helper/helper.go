@@ -11,6 +11,7 @@ import (
 	"github.com/btcsuite/btcd/btcutil"
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 	"github.com/btcsuite/btcd/chaincfg"
+	"github.com/btcsuite/btcd/rpcclient"
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/joho/godotenv"
 
@@ -102,4 +103,19 @@ func PrintResults(mnemonic string, wif *btcutil.WIF, publicKey *btcec.PublicKey,
 	fmt.Printf("公钥 (压缩格式): %s\n", hex.EncodeToString(publicKey.SerializeCompressed()))
 	fmt.Printf("公钥 (非压缩格式): %s\n", hex.EncodeToString(publicKey.SerializeUncompressed()))
 	fmt.Println("地址:", bech32Address.EncodeAddress())
+}
+
+func NewClient(url, user, pass string) (*rpcclient.Client, error) {
+	connCfg := &rpcclient.ConnConfig{
+		Host:         url, // 不加 https://
+		User:         user,
+		Pass:         pass,
+		HTTPPostMode: true,
+		DisableTLS:   false, // 使用 https
+	}
+	client, err := rpcclient.New(connCfg, nil)
+	if err != nil {
+		log.Fatalf("连接到 RPC 节点失败: %v", err)
+	}
+	return client, nil
 }

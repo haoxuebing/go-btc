@@ -17,7 +17,7 @@ import (
 
 var (
 	cfg                = &chaincfg.TestNet3Params                                           // 测试网参数
-	preTxid            = "c1c9e592f3c32a08302e4a99238c53987b9e842965947192a3db758610043e3e" // 前一笔交易的交易ID
+	preTxid            = "384f7043cda6eadca5b781689f125778d954cafee9f403a49f96380fe4a4600b" // 前一笔交易的交易ID
 	receiveTaprootAddr = "tb1pcvwe95ec64urxykp2nfdnvxftfk0rvvw0w77u4mauv2355gxrf4qg0r5xj"   // 接收地址
 )
 
@@ -58,7 +58,7 @@ func main() {
 	tx.AddTxIn(in)
 
 	// 新建输出，支付到指定地址并填充转移多少
-	out := wire.NewTxOut(int64(300000), receiveByteAddr)
+	out := wire.NewTxOut(int64(530000), receiveByteAddr)
 	tx.AddTxOut(out)
 
 	// 获取前一笔交易
@@ -76,12 +76,33 @@ func main() {
 	var signedTx bytes.Buffer
 	tx.Serialize(&signedTx)
 	finalRawTx := hex.EncodeToString(signedTx.Bytes())
+	fmt.Println("Signed Transaction: ", finalRawTx)
+	// 手动广播交易：通过 https://mempool.space/testnet/tx/push 将交易推送到mempool中
 
-	fmt.Printf("Signed Transaction:\n %s", finalRawTx)
+	// 广播交易
+	txHash, err := BroadcastTx(tx)
+	if err != nil {
+		log.Fatalf("广播交易失败: %v", err)
+	}
 
-	// 使用 https://mempool.space/testnet/tx/push 将交易推送到 mempool 中
+	fmt.Println("Transaction Hash: ", txHash.String())
 }
 
+// 广播交易
+func BroadcastTx(tx *wire.MsgTx) (*chainhash.Hash, error) {
+	url := "newest-black-needle.btc-testnet.quiknode.pro/b33c9ebcd8dc02361c951ebb88f1accc123a262e"
+	user := "user"
+	pass := "pass"
+
+	client, err := helper.NewClient(url, user, pass)
+	if err != nil {
+		return nil, err
+	}
+
+	return client.SendRawTransaction(tx, false)
+}
+
+// 获取未花费的交易输出
 func GetUnspent(address, txid, scriptPubKey string, amount int64) (*wire.OutPoint, *txscript.MultiPrevOutFetcher) {
 	// 交易的哈希值，并且要指定输出位置
 	txHash, _ := chainhash.NewHashFromStr(txid)
