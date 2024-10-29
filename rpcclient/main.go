@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/btcsuite/btcd/rpcclient"
@@ -11,7 +12,7 @@ import (
 
 func main() {
 	connCfg := &rpcclient.ConnConfig{
-		Host:         "newest-black-needle.btc-testnet.quiknode.pro/b33c9ebcd8dc02361c951ebb88f1accc123a262e",
+		Host:         os.Getenv("RPC_URL"),
 		User:         "user", // 不填会报错
 		Pass:         "pass", // 不填会报错
 		HTTPPostMode: true,

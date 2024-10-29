@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"os"
 
 	"go-btc/helper"
 
@@ -90,7 +91,7 @@ func main() {
 
 // 广播交易
 func BroadcastTx(tx *wire.MsgTx) (*chainhash.Hash, error) {
-	url := "newest-black-needle.btc-testnet.quiknode.pro/b33c9ebcd8dc02361c951ebb88f1accc123a262e"
+	url := os.Getenv("RPC_URL")
 	user := "user"
 	pass := "pass"
 
