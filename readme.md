@@ -35,5 +35,5 @@ bc1qz66uxud3kv3s79ddpnkyj3s2spc2flqudk4www
 
 ## 创建一笔交易
 
-- 测试网下 [创建一笔交易](transaction/main.go)
+- 测试网下创建一笔交易 [代码](transaction/main.go)
 - 也可使用 https://mempool.space/testnet/tx/push 将交易推送到 mempool 中
