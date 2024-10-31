@@ -22,7 +22,7 @@ var (
 	cfg                      = &chaincfg.TestNet3Params
 	receiveTaprootAddr       = "tb1pcvwe95ec64urxykp2nfdnvxftfk0rvvw0w77u4mauv2355gxrf4qg0r5xj"
 	outputAmount       int64 = 1000
-	feeRate                  = HourFee
+	feeRate                  = FastestFee
 )
 
 // FeeRateType 定义费率类型
@@ -87,11 +87,11 @@ func main() {
 	fmt.Println("Signed Transaction: ", finalRawTx)
 
 	// 广播交易
-	// txHash, err := broadcastTransaction(tx)
-	// if err != nil {
-	// 	log.Fatalf("广播交易失败: %v", err)
-	// }
-	// fmt.Println("Transaction Hash: ", txHash.String())
+	txHash, err := broadcastTransaction(tx)
+	if err != nil {
+		log.Fatalf("广播交易失败: %v", err)
+	}
+	fmt.Println("Transaction Hash: ", txHash.String())
 }
 
 // getFeeRate 获取指定类型的费率
@@ -191,11 +191,7 @@ func createTransaction(utxos []UTXO, receiveAddr, changeAddr string, feeRate int
 		pkScript, _ := hex.DecodeString(utxo.PkScript)
 		fetcher.AddPrevOut(*point, wire.NewTxOut(utxo.Amount, pkScript))
 
-		// 重新计算费用
-		estimatedTxSize := estimateTxSize(len(tx.TxIn), 2) // 1个输出是接收地址，1个是找零地址
-		fee := int64(estimatedTxSize) * feeRate
-
-		if totalInputAmount >= outputAmount+fee {
+		if totalInputAmount >= outputAmount {
 			break
 		}
 	}
