@@ -36,4 +36,7 @@ bc1qz66uxud3kv3s79ddpnkyj3s2spc2flqudk4www
 ## 创建一笔交易
 
 - 测试网下创建一笔交易 [代码](transaction/main.go)
+- 支持多utxo输入
+- 支持找零
+- 使用segwit、和taproot地址类型
 - 也可使用 https://mempool.space/testnet/tx/push 将交易推送到 mempool 中
