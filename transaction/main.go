@@ -213,7 +213,7 @@ func createTransaction(utxos []UTXO, receiveAddr, changeAddr string, feeRate int
 
 // estimateTxSize 估算交易大小
 func estimateTxSize(numInputs, numOutputs int) int {
-	return numInputs*180 + numOutputs*34 + 10 // 估算交易大小
+	return numInputs*180 + numOutputs*34 + 10 + 2 // 额外加上版本和锁定时间的字节
 }
 
 // addWitnesses 添加见证
