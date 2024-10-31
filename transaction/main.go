@@ -87,11 +87,11 @@ func main() {
 	fmt.Println("Signed Transaction: ", finalRawTx)
 
 	// 广播交易
-	txHash, err := broadcastTransaction(tx)
-	if err != nil {
-		log.Fatalf("广播交易失败: %v", err)
-	}
-	fmt.Println("Transaction Hash: ", txHash.String())
+	// txHash, err := broadcastTransaction(tx)
+	// if err != nil {
+	// 	log.Fatalf("广播交易失败: %v", err)
+	// }
+	// fmt.Println("Transaction Hash: ", txHash.String())
 }
 
 // getFeeRate 获取指定类型的费率
